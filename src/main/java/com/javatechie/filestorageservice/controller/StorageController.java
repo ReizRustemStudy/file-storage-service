@@ -37,4 +37,18 @@ public class StorageController {
 				.contentType(MediaType.IMAGE_PNG)
 				.body(imageData);
 	}
+	
+	@PostMapping("/fileSystem")
+	ResponseEntity<?> uploadImageToFileSystem(@RequestParam("image") MultipartFile file) throws IOException {
+		String uploadImage = service.uploadImageToFileSystem(file);
+		return ResponseEntity.ok(uploadImage);
+	}
+	
+	@GetMapping("/fileSystem/{fileName}")
+	ResponseEntity<?> downloadImageFromFileSystem(@PathVariable String fileName) throws IOException {
+		byte[] imageData = service.downloadImageFromFileSystem(fileName);
+		return ResponseEntity.status(HttpStatus.OK)
+				.contentType(MediaType.IMAGE_PNG)
+				.body(imageData);
+	}
 }
